@@ -1,9 +1,51 @@
 const UserCar = require('../models/userCarModel'); // Asume que tienes un modelo de relación de usuario con coches
 
-// Controlador para guardar un coche como favorito para un usuario
+/**
+ * @swagger
+ * /userCars/addFavoriteCar:
+ *   post:
+ *     summary: Agregar un coche a la lista de favoritos de un usuario.
+ *     tags: [Usuarios y Coches]
+ *     description: Agrega un coche a la lista de favoritos de un usuario.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: string
+ *               carId:
+ *                 type: string
+ *             example:
+ *               userId: "usuario123"
+ *               carId: "coche456"
+ *     responses:
+ *       '200':
+ *         description: Coche agregado a favoritos con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Coche agregado a favoritos con éxito
+ *       '400':
+ *         description: El coche ya está en la lista de favoritos del usuario.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: El coche ya está en la lista de favoritos del usuario
+ *       '500':
+ *         description: Error interno del servidor.
+ */
 const addFavoriteCar = async (req, res) => {
-  // Lógica para agregar un coche a la lista de favoritos de un usuario
-
   try {
     const { userId, carId } = req.body;
 

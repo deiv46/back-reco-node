@@ -7,8 +7,12 @@ const carData = require('./database/carData.json');
 const userController = require('./controllers/userController');
 const carController = require('./controllers/carController');
 const userCarController = require('./controllers/userCarController');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./config/swaggerConfig.js'); // Importa la configuración de Swagger
+const routes = require('./routes/routes.js'); // Importa las rutas desde el archivo routes.js
 
 const app = express();
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const port = normalizePort(process.env.PORT || '3000');
 
 app.use((req, res, next) => {
@@ -91,16 +95,8 @@ function generateModelID(brand, model) {
 // Llamar a la función para crear la base de datos y las colecciones
 createDatabaseAndCollections();
 
-// Rutas para usuarios
-app.post('/register', userController.registerUser);
-app.post('/login', userController.loginUser);
-
-// Rutas para coches
-app.get('/cars', carController.getCars);
-
-// Rutas para relaciones de usuario con coches
-app.post('/userCars/addFavoriteCar', userCarController.addFavoriteCar);
-// Agrega otras rutas relacionadas con relaciones de usuario con coches (eliminar favorito, obtener favoritos, etc.)
+// Usa las rutas en tu aplicación
+app.use('/', routes);
 
 // Inicia el servidor aquí
 app.listen(port, () => {

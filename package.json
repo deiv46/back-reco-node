@@ -18,6 +18,8 @@
     "mongodb": "^3.3.2",
     "mongoose": "^7.4.5",
     "pg-promise": "^8.4.5",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "tedious": "^2.6.4"
   },
   "devDependencies": {

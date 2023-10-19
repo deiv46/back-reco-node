@@ -1,6 +1,24 @@
 const { connectToDatabase } = require('../database/database');
 
-// Controlador para obtener una lista de coches
+/**
+ * @swagger
+ * /cars:
+ *   get:
+ *     summary: Obtener una lista de coches.
+ *     tags: [Coches]
+ *     description: Obtiene una lista de coches disponibles en la API.
+ *     responses:
+ *       '200':
+ *         description: Respuesta exitosa con la lista de coches.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Car'
+ *       '500':
+ *         description: Error interno del servidor.
+ */
 const getCars = async (req, res) => {
   try {
     const db = await connectToDatabase(); // Obtén la conexión a la base de datos

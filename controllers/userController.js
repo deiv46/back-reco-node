@@ -4,7 +4,44 @@ const bcrypt = require("bcrypt");
 const { jwtSecretKey } = require('../config/config.js');
 const User = require('../models/userModel'); // Asume que tienes un modelo de usuario
 
-// Controlador para el registro de usuarios
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Registrar un nuevo usuario.
+ *     tags: [Usuarios]
+ *     description: Registra un nuevo usuario en la aplicación.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example:
+ *               username: "nuevoUsuario"
+ *               password: "contraseña123"
+ *     responses:
+ *       '200':
+ *         description: Usuario registrado con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Usuario registrado con éxito
+ *                 token:
+ *                   type: string
+ *                   example: "jwt.token.aqui"
+ *       '500':
+ *         description: Error interno del servidor.
+ */
 const registerUser = async (req, res) => {
   // Lógica para registrar un nuevo usuario (crear un documento de usuario en la base de datos)
   // Debes validar los datos y encriptar la contraseña antes de almacenarla en la base de datos
@@ -31,7 +68,54 @@ const registerUser = async (req, res) => {
   }
 };
 
-// Controlador para el inicio de sesión de usuarios
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Iniciar sesión como usuario.
+ *     tags: [Usuarios]
+ *     description: Inicia sesión como usuario y obtiene un token JWT válido.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example:
+ *               username: "usuarioExistente"
+ *               password: "contraseña123"
+ *     responses:
+ *       '200':
+ *         description: Inicio de sesión exitoso.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Inicio de sesión exitoso
+ *                 token:
+ *                   type: string
+ *                   example: "jwt.token.aqui"
+ *       '401':
+ *         description: Nombre de usuario o contraseña incorrectos.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Nombre de usuario o contraseña incorrectos
+ *       '500':
+ *         description: Error interno del servidor.
+ */
 const loginUser = async (req, res) => {
   // Lógica para autenticar a un usuario (comprobar las credenciales)
 
