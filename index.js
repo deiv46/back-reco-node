@@ -102,20 +102,20 @@ app.get('/cars', carController.getCars);
 app.post('/userCars/addFavoriteCar', userCarController.addFavoriteCar);
 // Agrega otras rutas relacionadas con relaciones de usuario con coches (eliminar favorito, obtener favoritos, etc.)
 
+// Inicia el servidor aquí
+app.listen(port, () => {
+  console.log(`Servidor en ejecución en el puerto ${port}`);
+});
+
 //testing
-const Mocha = require('mocha');
+/*const Mocha = require('mocha');
 const mocha = new Mocha();
 // Importamos archivos de prueba
 mocha.addFile('./test/users.test.js');
 // Ejecutamos las pruebas
 mocha.run((failures) => {
   process.exit(failures);
-});
-
-// Inicia el servidor aquí
-app.listen(port, () => {
-  console.log(`Servidor en ejecución en el puerto ${port}`);
-});
+});*/
 
 function normalizePort(val) {
   const port = parseInt(val, 10);
@@ -127,3 +127,6 @@ function normalizePort(val) {
   }
   return false;
 }
+
+// Exporta el objeto app
+module.exports = app;

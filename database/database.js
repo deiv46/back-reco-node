@@ -4,7 +4,7 @@ const config = require('../config/config.js');
 const url = config.mongoURL;
 const dbName = config.dbName;
 
-const client = new MongoClient(url, { useUnifiedTopology: true });
+const client = new MongoClient(url, { useUnifiedTopology: true, useNewUrlParser: true });
 
 async function connectToDatabase() {
   await client.connect();
