@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
+const { connectToDatabase } = require('../database/database');
 const { jwtSecretKey } = require('../config/config.js');
 const User = require('../models/userModel'); // Asume que tienes un modelo de usuario
 
