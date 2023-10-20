@@ -30,11 +30,22 @@ const getCars = async (req, res) => {
       // Si se proporciona el nombre de usuario, busca los modelos de coches marcados como favoritos por ese usuario
       const userFavoriteModels = await db.collection('userCars').find({ userName }).toArray();
       
-      // Recorre la estructura de datos de los coches y agrega una propiedad "isFavorite" a los modelos
       carsData.forEach((brand) => {
-        brand.modelos.forEach((modelo) => {
-          const modelId = modelo._id;
-          modelo.isFavorite = userFavoriteModels.some((favoriteModel) => favoriteModel.carId === modelId);
+      console.log(`Marca: ${brand.nombre}`); // Agregar una traza de la marca
+
+      brand.modelos.forEach((modelo) => {
+        console.log(`Modelo ID: ${modelo._id}`); // Agregar una traza del ID del modelo
+        const modelId = modelo._id;
+
+        // Verificar si el modelo existe en userFavoriteModels
+        const favoriteModel = userFavoriteModels.find((favoriteModel) => favoriteModel.carId === modelId);
+          if (favoriteModel) {
+            console.log(`El modelo ${modelId} es favorito.`);
+          } else {
+            console.log(`El modelo ${modelId} no es favorito.`);
+          }
+
+          modelo.isFavorite = !!favoriteModel;
         });
       });
     }
