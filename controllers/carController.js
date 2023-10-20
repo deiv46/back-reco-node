@@ -31,22 +31,27 @@ const getCars = async (req, res) => {
       const userFavoriteModels = await db.collection('userCars').find({ userName }).toArray();
       
       carsData.forEach((brand) => {
-      console.log(`Marca: ${brand.nombre}`); // Agregar una traza de la marca
-
-      brand.modelos.forEach((modelo) => {
-        console.log(`Modelo ID: ${modelo._id}`); // Agregar una traza del ID del modelo
-        const modelId = modelo._id;
-
-        // Verificar si el modelo existe en userFavoriteModels
-        const favoriteModel = userFavoriteModels.find((favoriteModel) => favoriteModel.carId === modelId);
-          if (favoriteModel) {
-            console.log(`El modelo ${modelId} es favorito.`);
-          } else {
-            console.log(`El modelo ${modelId} no es favorito.`);
-          }
-
-          modelo.isFavorite = !!favoriteModel;
-        });
+        if (brand && brand.nombre && Array.isArray(brand.modelos)) {
+          console.log(`Marca: ${brand.nombre}`); // Agregar una traza de la marca
+          brand.modelos.forEach((modelo) => {
+            if (modelo && modelo._id) {
+              console.log(`Modelo ID: ${modelo._id}`); // Agregar una traza del ID del modelo
+              const modelId = modelo._id;
+              // Verificar si el modelo existe en userFavoriteModels
+              const favoriteModel = userFavoriteModels.find((favoriteModel) => favoriteModel.carId === modelId);
+              if (favoriteModel) {
+                console.log(`El modelo ${modelId} es favorito.`);
+              } else {
+                console.log(`El modelo ${modelId} no es favorito.`);
+              }
+              modelo.isFavorite = !!favoriteModel;
+            } else {
+              console.error('Datos de modelo incorrectos:', modelo);
+            }
+          });
+        } else {
+          console.error('Datos de marca incorrectos:', brand);
+        }
       });
     }
     
@@ -56,6 +61,7 @@ const getCars = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener la lista de coches' });
   }
 };
+
 
 
 module.exports = {
