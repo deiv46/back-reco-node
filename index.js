@@ -12,6 +12,7 @@ const swaggerSpec = require('./config/swaggerConfig.js'); // Importa la configur
 const routes = require('./routes/routes.js'); // Importa las rutas desde el archivo routes.js
 const cors = require('cors');
 const app = express();
+const bcrypt = require("bcrypt");
 app.use(cors({ origin: 'https://front-reco-react.onrender.com' }));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const port = normalizePort(process.env.PORT || '3000');
@@ -42,10 +43,17 @@ async function createDatabaseAndCollections() {
     // Verificar si la colección "users" está vacía e insertar datos de muestra si es así
     const usersCollection = db.collection('users');
     const userCount = await usersCollection.countDocuments({});
+    const password = 'recomotor';
+    // Genera un salt para el hashing (puede ser asincrónico)
+    const salt = bcrypt.genSaltSync(10);
+    // Hashea la contraseña utilizando el salt
+    const hashedPassword = bcrypt.hashSync(password, salt);
+    console.log('Contraseña original: ' + password);
+    console.log('Contraseña hasheada: ' + hashedPassword);
     if (userCount === 0) {
       const sampleUsers = Array.from({ length: 10 }, (_, i) => ({
-        _id: generateRandomUserID(),
-        password: 'recomotor',
+        username: generateRandomUserID(),
+        password: hashedPassword,
       }));
       await usersCollection.insertMany(sampleUsers);
       console.log('Usuarios de ejemplo insertados en la colección "users"');
