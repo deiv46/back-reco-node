@@ -120,7 +120,8 @@ const loginUser = async (req, res) => {
   const { username, password } = req.body;
 
   try {
-    const users = await User.find({ username }).limit(1);
+    const db = await connectToDatabase();
+    const users = await db.collection('users').find({ username }).toArray();
 
     if (users.length === 0) {
       return res.status(401).json({ error: 'Nombre de usuario o contraseña incorrectos' });
