@@ -28,35 +28,6 @@ const router = express.Router();
 
 /**
  * @swagger
- * /users/register:
- *   post:
- *     summary: Registrar un nuevo usuario.
- *     tags: [Usuarios]
- *     description: Registra un nuevo usuario en la aplicación.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               password:
- *                 type: string
- *             required:
- *               - username
- *               - password
- *     responses:
- *       '200':
- *         description: Usuario registrado con éxito.
- *       '500':
- *         description: Error interno del servidor.
- */
-router.post('/register', userController.registerUser);
-
-/**
- * @swagger
  * /users/login:
  *   post:
  *     summary: Iniciar sesión de un usuario.
