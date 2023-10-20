@@ -117,27 +117,27 @@ const registerUser = async (req, res) => {
  *         description: Error interno del servidor.
  */
 const loginUser = async (req, res) => {
-  // Lógica para autenticar a un usuario (comprobar las credenciales)
+  const { username, password } = req.body;
 
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const users = await User.find({ username }).limit(1);
 
-    if (!user) {
+    if (users.length === 0) {
       return res.status(401).json({ error: 'Nombre de usuario o contraseña incorrectos' });
     }
 
-    const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+    const user = users[0];
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Nombre de usuario o contraseña incorrectos' });
     }
 
-    // Genera un token JWT y lo envía como respuesta al inicio de sesión exitoso
     const token = jwt.sign({ userId: user._id }, jwtSecretKey, { expiresIn: '1h' });
 
     res.json({ message: 'Inicio de sesión exitoso', token });
   } catch (error) {
-    res.status(500).json({ error: 'Error en el inicio de sesión', error });
+    res.status(500).json({ error: 'Error en el inicio de sesión', error: error.message });
   }
 };
 
