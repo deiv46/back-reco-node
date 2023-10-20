@@ -10,7 +10,8 @@ const userCarController = require('./controllers/userCarController');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swaggerConfig.js'); // Importa la configuración de Swagger
 const routes = require('./routes/routes.js'); // Importa las rutas desde el archivo routes.js
-
+const cors = require('cors');
+app.use(cors({ origin: 'https://front-reco-react.onrender.com' }));
 const app = express();
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const port = normalizePort(process.env.PORT || '3000');
