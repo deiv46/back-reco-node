@@ -1,7 +1,7 @@
 const UserCar = require('../models/userCarModel');
 const { connectToDatabase } = require('../database/database');
 
-const toggleFavoriteCar = async (req, res) => {
+const addFavoriteCar = async (req, res) => {
   try {
     const { userId, carId } = req.body;
     const db = await connectToDatabase();
@@ -28,5 +28,5 @@ const toggleFavoriteCar = async (req, res) => {
 };
 
 module.exports = {
-  toggleFavoriteCar,
+  addFavoriteCar,
 };
