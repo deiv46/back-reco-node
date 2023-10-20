@@ -19,16 +19,33 @@ const { connectToDatabase } = require('../database/database');
  *       '500':
  *         description: Error interno del servidor.
  */
+
 const getCars = async (req, res) => {
   try {
-    const db = await connectToDatabase(); // Obtén la conexión a la base de datos
-    const cars = await db.collection('cars').find().toArray(); // Realiza una consulta a la colección 'cars'
-    res.json(cars);
+    const db = await connectToDatabase();
+    const carsData = await db.collection('cars').find().toArray();
+    const userName = req.query.userName;
+    
+    if (userName) {
+      // Si se proporciona el nombre de usuario, busca los modelos de coches marcados como favoritos por ese usuario
+      const userFavoriteModels = await db.collection('userCars').find({ userName }).toArray();
+      
+      // Recorre la estructura de datos de los coches y agrega una propiedad "isFavorite" a los modelos
+      carsData.forEach((brand) => {
+        brand.modelos.forEach((modelo) => {
+          const modelId = modelo._id;
+          modelo.isFavorite = userFavoriteModels.some((favoriteModel) => favoriteModel.carId === modelId);
+        });
+      });
+    }
+    
+    res.json(carsData);
   } catch (error) {
     console.error('Error al obtener la lista de coches:', error);
     res.status(500).json({ error: 'Error al obtener la lista de coches' });
   }
 };
+
 
 module.exports = {
   getCars,

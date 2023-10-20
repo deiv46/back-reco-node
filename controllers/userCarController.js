@@ -3,19 +3,19 @@ const { connectToDatabase } = require('../database/database');
 
 const addFavoriteCar = async (req, res) => {
   try {
-    const { userId, carId } = req.body;
+    const { userName, carId } = req.body;
     const db = await connectToDatabase();
     
-    const existingFavorite = await db.collection('userCars').findOne({ userId, carId });
+    const existingFavorite = await db.collection('userCars').findOne({ userName, carId });
     
     if (existingFavorite) {
       // Si el coche ya está en favoritos, lo eliminamos
-      await db.collection('userCars').deleteOne({ userId, carId });
+      await db.collection('userCars').deleteOne({ userName, carId });
       res.status(200).json({ message: 'Coche eliminado de favoritos con éxito' });
     } else {
       // Si el coche no está en favoritos, lo agregamos
       await db.collection('userCars').insertOne({
-        userId,
+        userName,
         carId,
       });
     
