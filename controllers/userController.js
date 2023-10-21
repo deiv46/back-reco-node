@@ -75,6 +75,9 @@ const loginUser = async (req, res) => {
     res.json({ message: 'Inicio de sesión exitoso', token });
   } catch (error) {
     res.status(500).json({ error: 'Error en el inicio de sesión', error: error.message });
+  } finally {
+    // Cierra la conexión a la base de datos de manera segura.
+    closeDatabaseConnection();
   }
 };
 

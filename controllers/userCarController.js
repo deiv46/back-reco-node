@@ -24,6 +24,9 @@ const addFavoriteCar = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error interno del servidor al gestionar el coche en favoritos' });
+  } finally {
+    // Cierra la conexión a la base de datos de manera segura.
+    closeDatabaseConnection();
   }
 };
 

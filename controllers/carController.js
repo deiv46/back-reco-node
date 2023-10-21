@@ -65,6 +65,9 @@ const getCars = async (req, res) => {
   } catch (error) {
     console.error('Error al obtener la lista de coches:', error);
     res.status(500).json({ error: 'Error al obtener la lista de coches' });
+  } finally {
+    // Cierra la conexión a la base de datos de manera segura.
+    closeDatabaseConnection();
   }
 };
 
