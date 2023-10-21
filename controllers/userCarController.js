@@ -1,6 +1,46 @@
 const UserCar = require('../models/userCarModel');
 const { connectToDatabase, closeDatabaseConnection } = require('../database/database');
 
+/**
+ * @swagger
+ * /addFavoriteCar:
+ *   post:
+ *     summary: Añadir o eliminar un coche de favoritos para un usuario.
+ *     description: Añade un coche a la lista de favoritos de un usuario o lo elimina si ya está en la lista.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userName:
+ *                 type: string
+ *                 description: El nombre de usuario.
+ *               carId:
+ *                 type: string
+ *                 description: El ID del coche.
+ *     responses:
+ *       200:
+ *         description: Coche agregado o eliminado con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
+
 const addFavoriteCar = async (req, res) => {
   try {
     const { userName, carId } = req.body;
@@ -30,6 +70,36 @@ const addFavoriteCar = async (req, res) => {
   }
 };
 
+/**
+ * @swagger
+ * /getDataDashboard:
+ *   get:
+ *     summary: Obtener datos del dashboard.
+ *     description: Obtiene información sobre los coches favoritos de los usuarios y crea un ranking de marcas y modelos.
+ *     responses:
+ *       200:
+ *         description: Datos del dashboard.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 cochesPorUsuario:
+ *                   type: object
+ *                 rankingMarcas:
+ *                   type: object
+ *                 rankingModelos:
+ *                   type: object
+ *       500:
+ *         description: Error interno del servidor al obtener información del dashboard.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ */
 const getDataDashboard = async (req, res) => {
   let db;
   try {
