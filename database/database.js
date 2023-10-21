@@ -12,6 +12,12 @@ async function connectToDatabase() {
   return db;
 }
 
+// Cierre de la conexión a la base de datos
+async function closeDatabaseConnection() {
+  await client.close();
+}
+
 module.exports = {
   connectToDatabase,
+  closeDatabaseConnection,
 };

@@ -103,4 +103,6 @@ router.get('/cars', carController.getCars);
  */
 router.post('/userCars/addFavoriteCar', userCarController.addFavoriteCar);
 
+router.get('/userCars/getDataDashboard', userCarController.getDataDashboard);
+
 module.exports = router;
