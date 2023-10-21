@@ -103,6 +103,25 @@ router.get('/cars', carController.getCars);
  */
 router.post('/userCars/addFavoriteCar', userCarController.addFavoriteCar);
 
+/**
+ * @swagger
+ * /userCars/getDataDashboard:
+ *   get:
+ *     summary: Obtiene datos del panel de control del usuario.
+ *     description: Obtiene datos para mostrar en el panel de control del usuario.
+ *     tags:
+ *       - UserCars
+ *     responses:
+ *       200:
+ *         description: Datos del panel de control obtenidos con éxito.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/DashboardData'
+ *       500:
+ *         description: Error interno del servidor.
+ */
+
 router.get('/userCars/getDataDashboard', userCarController.getDataDashboard);
 
 module.exports = router;
